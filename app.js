@@ -33,7 +33,8 @@ app.get('/', async (req, res) => {
         return;
     }
 
-    const status = await addItem(word, trans)
+    // let word_lower = word.toLowerCase;
+    const status = await addItem(word_lower, trans);
     if(status.err != 0){
         res.json({
             errCode: -4,
