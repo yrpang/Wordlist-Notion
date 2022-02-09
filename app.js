@@ -33,7 +33,7 @@ app.get('/', async (req, res) => {
         return;
     }
 
-    // let word_lower = word.toLowerCase;
+    let word_lower = word.toLowerCase();
     const status = await addItem(word_lower, trans);
     if(status.err != 0){
         res.json({
