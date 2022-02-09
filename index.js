@@ -1,6 +1,6 @@
-import { Client } from "@notionhq/client";
-import axios from "axios";
 import { randomUUID, createHash } from 'crypto'
+import axios from "axios";
+import { Client } from "@notionhq/client";
 
 const NOTION_KEY = 'secret_eVqnnBDiCYHtLU5mfvRLg48xq4nLnZpoFIBiy0RBIuE';
 const databaseId = '5fe6198ed109423b83b32b807c831e78';
