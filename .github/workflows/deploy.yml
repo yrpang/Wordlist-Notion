@@ -22,3 +22,8 @@ jobs:
         echo "TENCENT_SECRET_KEY=$TENCENT_SECRET_KEY" >> .env
         sls deploy > log.txt
         tail -30 log.txt
+    - name: Archive log.txt
+      uses: actions/upload-artifact@v2
+      with:
+        name: deploy-log
+        path: log.txt
