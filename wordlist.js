@@ -31,7 +31,7 @@ async function getWordTrans(word) {
             + '&sign=' + sign
             + '&signType=v3'
             + '&curtime=' + curtime;
-        const res = await axios.get(reqUrl);
+        const res = await axios.get(encodeURI(reqUrl));
         const { errorCode, basic, isWord } = res.data;
         if (errorCode != 0) {
             return {
