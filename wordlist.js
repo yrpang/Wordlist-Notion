@@ -115,7 +115,7 @@ async function addItem(src, res) {
             rich_text: [
                 {
                     "text": {
-                        content: '| ' + phonetic + ' |'
+                        content: phonetic ? '| ' + phonetic + ' |' : ''
                     }
                 }
             ]
