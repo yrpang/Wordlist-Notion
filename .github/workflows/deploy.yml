@@ -9,7 +9,7 @@ jobs:
     - name: Setup Node.js environment
       uses: actions/setup-node@v2.5.1
       with: 
-        node-version: '14'
+        node-version: '16'
     - name: npm install, build
       shell: bash
       env: 
@@ -21,4 +21,4 @@ jobs:
         echo "TENCENT_SECRET_ID=$TENCENT_SECRET_ID" >> .env
         echo "TENCENT_SECRET_KEY=$TENCENT_SECRET_KEY" >> .env
         sls deploy > log.txt
-        tail -20 log.txt
+        tail -30 log.txt

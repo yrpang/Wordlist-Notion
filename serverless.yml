@@ -14,6 +14,7 @@ inputs:
   region: ap-beijing
   runtime: Nodejs16.13
   installDependency: true
+  timeout: 15
   events: 
     - apigw: 
         parameters: 
