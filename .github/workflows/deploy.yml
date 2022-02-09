@@ -10,7 +10,12 @@ jobs:
       with: 
         node-version: '16'
     - name: npm install, build
+      shell: bash
+      env: 
+        TENCENT_SECRET_ID: ${{secrets.TENCENT_SECRET_ID}}
+        TENCENT_SECRET_KEY: ${{secrets.TENCENT_SECRET_KEY}}
       run: |
         npm install -g serverless
+        echo "TENCENT_SECRET_ID=$TENCENT_SECRET_ID" >> .env
+        echo "TENCENT_SECRET_KEY=$TENCENT_SECRET_KEY" >> .env
         sls deploy
-        echo "Hello!"
