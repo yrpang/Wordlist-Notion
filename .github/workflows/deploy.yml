@@ -12,5 +12,5 @@ jobs:
     - name: npm install, build
       run: |
         npm install -g serverless
-        sls
+        SLS_INTERACTIVE_SETUP_ENABLE=1 sls
         echo "Hello!"
