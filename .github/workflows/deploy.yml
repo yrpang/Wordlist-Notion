@@ -16,7 +16,9 @@ jobs:
         TENCENT_SECRET_ID: ${{secrets.TENCENT_SECRET_ID}}
         TENCENT_SECRET_KEY: ${{secrets.TENCENT_SECRET_KEY}}
       run: |
-        npm install -g serverless@2.72.2
+        npm install -g serverless
+        echo "SERVERLESS_PLATFORM_VENDOR=tencent" >> .env
         echo "TENCENT_SECRET_ID=$TENCENT_SECRET_ID" >> .env
         echo "TENCENT_SECRET_KEY=$TENCENT_SECRET_KEY" >> .env
-        sls deploy
+        sls deploy > log.txt
+        tail -20 log.txt
