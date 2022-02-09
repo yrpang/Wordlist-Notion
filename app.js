@@ -2,7 +2,7 @@ import express from 'express';
 import { getWordTrans, addItem } from './wordlist.js'
 
 const app = express()
-const port = 80
+const port = 9000
 
 app.get('/', async (req, res) => {
     const { word, secret } = req.query;
@@ -23,7 +23,7 @@ app.get('/', async (req, res) => {
     }
 
     const trans = await getWordTrans(word);
-    console.log(trans);
+    // console.log(trans);
 
     if (trans.err != 0) {
         res.json({
@@ -41,7 +41,7 @@ app.get('/', async (req, res) => {
         })
         return;
     }
-    
+
     console.log(status.errmsg);
     res.json({
         errCode: 0,
