@@ -1,0 +1,26 @@
+component: scf
+name: wordlist
+stage: prod
+inputs:
+  src:
+    src: ./
+    exclude:
+      - .env
+      - .github
+      - node_modules
+  type: web
+  name: notionBot
+  description: Save word to Notion. 
+  region: ap-beijing
+  runtime: Nodejs16.13
+  installDependency: true
+  events: 
+    - apigw: 
+        parameters: 
+          protocols: 
+            - https
+          environment: release
+          endpoints: 
+            - path: /
+              method: GET
+              environment: release
