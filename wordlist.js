@@ -2,8 +2,10 @@ import { randomUUID, createHash } from 'crypto'
 import axios from "axios";
 import { Client } from "@notionhq/client";
 
+// Notion API
 const NOTION_KEY = 'secret_eVqnnBDiCYHtLU5mfvRLg48xq4nLnZpoFIBiy0RBIuE';
 const databaseId = '5fe6198ed109423b83b32b807c831e78';
+// youdao API
 const APPKEY = '721e2adadc3e05f8';
 const key = '0MgIpFOAnVQHB7rmVwI8YBRNj47OBHGT';
 
@@ -63,7 +65,29 @@ async function getWordTrans(word) {
     }
 }
 
+async function checkIfExist(word) {
+    const response = await notion.databases.query({
+        database_id: databaseId,
+        filter: {
+            property: 'Word',
+            text: {
+                equals: word,
+            },
+        }
+    });
+    // console.log(response);
+    const { results } = response;
+    return (!results || results.length === 0) ? false : true
+}
+
 async function addItem(src, res) {
+    if (await checkIfExist(src)) {
+        return {
+            err: 0,
+            errmsg: 'Already exist.'
+        }
+    }
+
     const { isWord, trans, phonetic } = res
     const basic_prop = {
         'Word': {
@@ -105,11 +129,17 @@ async function addItem(src, res) {
         });
         // console.log(response);
         // console.log("Success! Entry added.");
+        return {
+            err: 0,
+            errmsg: 'OK'
+        }
+
     } catch (error) {
-        console.error(error.body);
+        return {
+            err: -1,
+            errmsg: error.body
+        }
     }
 }
-const word = 'connect';
-const trans = await getWordTrans(word);
-addItem(word, trans)
-// console.log(a);
+
+export { getWordTrans, addItem }
