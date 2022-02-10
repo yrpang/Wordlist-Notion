@@ -3,11 +3,7 @@ name: wordlist
 stage: prod
 inputs:
   src:
-    src: ./
-    exclude:
-      - .env
-      - .github
-      - node_modules
+    src: ./func
   type: web
   name: notionBot
   description: Save word to Notion. 
