@@ -10,20 +10,23 @@ jobs:
       uses: actions/setup-node@v2.5.1
       with: 
         node-version: '16'
-    - name: npm install, build
-      shell: bash
-      env: 
-        TENCENT_SECRET_ID: ${{secrets.TENCENT_SECRET_ID}}
-        TENCENT_SECRET_KEY: ${{secrets.TENCENT_SECRET_KEY}}
+    - name: install serverless
+      run: npm install -g serverless
+    - name: install node_modules
       run: |
-        npm install -g serverless
-        echo "SERVERLESS_PLATFORM_VENDOR=tencent" >> .env
-        echo "TENCENT_SECRET_ID=$TENCENT_SECRET_ID" >> .env
-        echo "TENCENT_SECRET_KEY=$TENCENT_SECRET_KEY" >> .env
-        sls deploy > log.txt
-        tail -30 log.txt
-    - name: Archive log.txt
-      uses: actions/upload-artifact@v2
-      with:
-        name: deploy-log
-        path: log.txt
+        cd src
+        npm install
+    - name: set keys.js
+      run: echo "$KEYS" > ./src/keys.js
+      env: 
+        KEYS: ${{ secrets.KEYS }}
+    - name: deploy
+      shell: bash
+      run: sls deploy --debug
+      env: 
+        SERVERLESS_PLATFORM_VENDOR: tencent
+        SLS_GEO_LOCATION: cn
+        STAGE: prod
+        TENCENT_SECRET_ID: ${{ secrets.TENCENT_SECRET_ID }}
+        TENCENT_SECRET_KEY: ${{ secrets.TENCENT_SECRET_KEY }}
+      

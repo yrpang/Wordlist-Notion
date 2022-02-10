@@ -1,9 +1,14 @@
-component: scf
-name: wordlist
+app: wordlist
 stage: prod
+
+component: scf
+name: notionAPI
+
 inputs:
   src:
-    src: ./func
+    src: ./src
+    exclude:
+      - .env
   type: web
   name: notionBot
   description: Save word to Notion. 
@@ -14,10 +19,10 @@ inputs:
   events: 
     - apigw: 
         parameters: 
-          protocols: 
+          serviceId: service-kjstrjbf
+          protocols:
             - https
           environment: release
           endpoints: 
             - path: /
               method: GET
-              environment: release

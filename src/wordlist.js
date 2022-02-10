@@ -1,13 +1,9 @@
 import { randomUUID, createHash } from 'crypto'
 import axios from "axios";
 import { Client } from "@notionhq/client";
+import { K } from './keys.js';
 
-// Notion API
-const NOTION_KEY = 'secret_eVqnnBDiCYHtLU5mfvRLg48xq4nLnZpoFIBiy0RBIuE';
-const databaseId = '5fe6198ed109423b83b32b807c831e78';
-// youdao API
-const APPKEY = '721e2adadc3e05f8';
-const key = '0MgIpFOAnVQHB7rmVwI8YBRNj47OBHGT';
+const { NOTION_KEY, databaseId, APPKEY, key} = K;
 
 const notion = new Client({ auth: NOTION_KEY });
 

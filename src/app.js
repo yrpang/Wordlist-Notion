@@ -1,5 +1,7 @@
 import express from 'express';
 import { getWordTrans, addItem } from './wordlist.js'
+import { K } from './keys.js';
+const { PASSWD } = K;
 
 const app = express()
 const port = 9000
@@ -14,7 +16,7 @@ app.get('/', async (req, res) => {
         return;
     }
 
-    if (!secret || secret !== 'FD1451FA-E921-4D85-BABB-5459DFF9676A') {
+    if (!secret || secret !== PASSWD) {
         res.json({
             errCode: -2,
             errMsg: "secret错误"
@@ -35,7 +37,7 @@ app.get('/', async (req, res) => {
 
     let word_lower = word.toLowerCase();
     const status = await addItem(word_lower, trans);
-    if(status.err != 0){
+    if (status.err != 0) {
         res.json({
             errCode: -4,
             errMsg: "addItem错误, 原始错误: " + status.errmsg
