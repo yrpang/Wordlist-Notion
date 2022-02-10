@@ -1,5 +1,5 @@
 app: wordlist
-stage: prod
+stage: dev
 
 component: scf
 name: notionAPI

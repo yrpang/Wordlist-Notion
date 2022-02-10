@@ -9,6 +9,8 @@ const port = 9000
 app.get('/', async (req, res) => {
     const { word, secret } = req.query;
     if (!word) {
+        console.log(word);
+        console.log(req.query)
         res.json({
             errCode: -1,
             errMsg: "参数word不存在"
