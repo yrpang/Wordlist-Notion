@@ -26,6 +26,8 @@ Follow this document [有道云自然语言翻译](https://ai.youdao.com/DOCSIRM
 
 Fill in the [`src/config.js`](./src/config.js) with the information obtainded above.
 
-Edit ['serverless.yml'](./serverless.yml) if you use Tencent SCF. This [SCF-config doc](https://github.com/serverless-components/tencent-scf/blob/master/docs/configure.md) may help.
+Edit [`serverless.yml`](./serverless.yml) if you use Tencent SCF. This [SCF-config doc](https://github.com/serverless-components/tencent-scf/blob/master/docs/configure.md) may help.
 
 You can also deploy it to other service provider.
+
+If you want to use Github Action, please read [`deploy.yml`](./.github/workflows/deploy.yml) and add required secrets. [Github Actions Secrets doc](https://docs.github.com/en/actions/security-guides/encrypted-secrets) may help.
