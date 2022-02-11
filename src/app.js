@@ -1,53 +1,54 @@
 import express from 'express';
 import { getWordTrans, addItem } from './wordlist.js'
-import { K } from './keys.js';
-const { PASSWD } = K;
+import { CONFIG } from './config.js';
+const { TOKEN } = CONFIG;
 
 const app = express()
 const port = 9000
 
 app.get('/', async (req, res) => {
-    const { word, secret } = req.query;
+    const { word, token } = req.query;
     if (!word) {
         console.log(word);
         console.log(req.query)
         res.json({
             errCode: -1,
-            errMsg: "参数word不存在"
+            errMsg: "Parameter 'word' is missing."
         });
         return;
     }
-
-    if (!secret || secret !== PASSWD) {
+    if (!token || token !== TOKEN) {
+        console.log(token)
         res.json({
             errCode: -2,
-            errMsg: "secret错误"
+            errMsg: "Parameter 'token' is missing or wrong."
         });
         return;
     }
 
-    const trans = await getWordTrans(word);
-    // console.log(trans);
-
-    if (trans.err != 0) {
+    // Get translation from youdao
+    const transRes = await getWordTrans(word);
+    if (transRes.err != 0) {
+        console.error(transRes);
         res.json({
             errCode: -3,
-            errMsg: "翻译错误, 原始错误号: " + trans.err
+            errMsg: "Translation fail. Original error is:" + transRes.errmsg
         })
         return;
     }
 
-    let word_lower = word.toLowerCase();
-    const status = await addItem(word_lower, trans);
-    if (status.err != 0) {
+    // Add word to Notion
+    const wordLower = word.toLowerCase();
+    const addItemRes = await addItem(wordLower, transRes);
+    if (addItemRes.err != 0) {
+        console.error(addItemRes);
         res.json({
             errCode: -4,
-            errMsg: "addItem错误, 原始错误: " + status.errmsg
+            errMsg: "Add to Notion fail. Original error is:" + addItemRes.errmsg
         })
         return;
     }
 
-    console.log(status.errmsg);
     res.json({
         errCode: 0,
         errMsg: 'OK'
@@ -55,6 +56,6 @@ app.get('/', async (req, res) => {
 })
 
 app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`)
+    console.log(`Wordlist listening at http://localhost:${port}`)
 })
 

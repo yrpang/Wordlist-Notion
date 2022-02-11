@@ -1,11 +1,11 @@
 import { randomUUID, createHash } from 'crypto'
 import axios from "axios";
 import { Client } from "@notionhq/client";
-import { K } from './keys.js';
+import { CONFIG } from './config.js';
 
-const { NOTION_KEY, databaseId, APPKEY, key} = K;
+const { NOTION_TOKEN, YOUDAO_ID, YOUDAO_TOKEN, database_id } = CONFIG;
 
-const notion = new Client({ auth: NOTION_KEY });
+const notion = new Client({ auth: NOTION_TOKEN });
 
 function truncate(q) {
     var len = q.length;
@@ -19,19 +19,20 @@ async function getWordTrans(word) {
         const curtime = Math.round(new Date().getTime() / 1000);
         const hash = createHash('sha256')
         const input = truncate(word);
-        const sign = hash.update(APPKEY + input + salt + curtime + key).digest("hex");
+        const sign = hash.update(YOUDAO_ID + input + salt + curtime + YOUDAO_TOKEN).digest("hex");
         const reqUrl = 'https://openapi.youdao.com/api?q=' + word
             + '&from=en&to=zh-CHS'
-            + '&appKey=' + APPKEY
+            + '&appKey=' + YOUDAO_ID
             + '&salt=' + salt
             + '&sign=' + sign
             + '&signType=v3'
             + '&curtime=' + curtime;
-        const res = await axios.get(encodeURI(reqUrl));
-        const { errorCode, basic, isWord } = res.data;
+        const response = await axios.get(encodeURI(reqUrl));
+        const { errorCode, basic, isWord } = response.data;
         if (errorCode != 0) {
             return {
-                err: errorCode
+                err: errorCode,
+                errmsg: 'API returns errorCode: ' + errorCode
             }
         }
 
@@ -44,7 +45,7 @@ async function getWordTrans(word) {
                 trans: explains.join()
             }
         } else {
-            const { translation } = res.data;
+            const { translation } = response.data;
             return {
                 err: errorCode,
                 isWord,
@@ -56,14 +57,14 @@ async function getWordTrans(word) {
         console.error(e);
         return {
             err: -1,
-            errmsg: '请求失败'
+            errmsg: 'Connect to youdao fail.'
         }
     }
 }
 
 async function checkIfExist(word) {
     const response = await notion.databases.query({
-        database_id: databaseId,
+        database_id: database_id,
         filter: {
             property: 'Word',
             text: {
@@ -120,11 +121,10 @@ async function addItem(src, res) {
 
     try {
         const response = await notion.pages.create({
-            parent: { database_id: databaseId },
+            parent: { database_id: database_id },
             properties
         });
-        // console.log(response);
-        // console.log("Success! Entry added.");
+        console.log("Success! Entry added.");
         return {
             err: 0,
             errmsg: 'OK'

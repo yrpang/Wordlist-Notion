@@ -16,10 +16,10 @@ jobs:
       run: |
         cd src
         npm install
-    - name: set keys.js
-      run: echo "$KEYS" > ./src/keys.js
+    - name: set config.js
+      run: echo "$CONFIG" > ./src/config.js
       env: 
-        KEYS: ${{ secrets.KEYS }}
+        CONFIG: ${{ secrets.CONFIG }}
     - name: deploy
       shell: bash
       run: sls deploy --debug
