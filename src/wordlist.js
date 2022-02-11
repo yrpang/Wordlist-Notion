@@ -86,7 +86,7 @@ async function addItem(src, res) {
 
     const { isWord, trans, phonetic } = res
     const basic_prop = {
-        'Word': {
+        'title': {
             title: [
                 {
                     "text": {
@@ -95,7 +95,7 @@ async function addItem(src, res) {
                 }
             ]
         },
-        'Meaning': {
+        'xGVJ': {
             rich_text: [
                 {
                     "text": {
@@ -107,7 +107,7 @@ async function addItem(src, res) {
     };
     const properties = isWord ? {
         ...basic_prop,
-        'Phonetic': {
+        'Hjo%40': {
             rich_text: [
                 {
                     "text": {
