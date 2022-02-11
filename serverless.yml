@@ -14,16 +14,16 @@ inputs:
   description: Save word to Notion. 
   region: ap-beijing
   runtime: Nodejs16.13
-  installDependency: true
-  vpcConfig: # 私有网络配置
-    vpcId: vpc-rgvuuoio # 私有网络的Id
-    subnetId: subnet-12q7b7zp # 子网ID
+  installDependency: false
+  vpcConfig: # 可以不指定
+    vpcId: vpc-rgvuuoio
+    subnetId: subnet-12q7b7zp
   eip: true
   timeout: 15
   events: 
     - apigw: 
         parameters: 
-          serviceId: service-kjstrjbf
+          serviceId: service-kjstrjbf # 留空可以自动创建
           protocols:
             - https
           environment: release
