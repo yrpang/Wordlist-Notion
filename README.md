@@ -31,3 +31,7 @@ Edit [`serverless.yml`](./serverless.yml) if you use Tencent SCF. This [SCF-conf
 You can also deploy it to other service provider.
 
 If you want to use Github Action, please read [`deploy.yml`](./.github/workflows/deploy.yml) and add required secrets. [Github Actions Secrets doc](https://docs.github.com/en/actions/security-guides/encrypted-secrets) may help.
+
+## Apple Shortcut
+
+You can alse use the [shortcut file attached here](https://www.icloud.com/shortcuts/aa5e043e878b4784acdb479a9733725e).
