@@ -1,4 +1,4 @@
-name: Deploy to tencnet SCF
+name: Deploy to tencent SCF
 on: [push]
 jobs: 
   Deploy:
