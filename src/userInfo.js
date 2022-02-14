@@ -1,5 +1,6 @@
 import mysql from 'mysql';
 import crypto from 'crypto';
+import { APIError } from './error.js';
 
 const connection = mysql.createConnection({
     host: '81.70.104.126',
@@ -42,43 +43,21 @@ async function createUser(userInfo) {
     }
 }
 
-async function getUser(userInfo) {
-    if (!userInfo) throw Error('No userInfo');
-
-    const { user_id, api_token } = userInfo;
-
-    if (!api_token) throw Error('No api_token');
+async function getUser(api_token) {
+    if (!api_token) throw new APIError('UserInfo', 'No api token');
 
     return new Promise((resolve, reject) => {
         connection.query("SELECT NOTION_TOKEN, YOUDAO_ID, YOUDAO_TOKEN, database_id FROM users WHERE TOKEN=?",
             [api_token], (error, results, fields) => {
                 if (error) reject(error);
-                console.log(results);
-                if (results.length == 0) resolve([]);
+                if (results.length !== 1)
+                    reject(new APIError('UserInfo', 'token is wrong'));
                 else {
-                    console.log(results[0]);
                     resolve(results[0])
                 };
             })
 
     })
 }
-
-
-// try {
-//     await createUser({
-//         notion_token: 'secret_2um92ACUkFSLlLRKQjpkqnUzFZNpWkqTvRLTDIzxMc5',
-//         database_id: '5fe6198ed109423b83b32b807c831e78',
-//         youdao_id: '721e2adadc3e05f8',
-//         youdao_token: 'zsMiLJQNXBxk18XvZI0pXAUUYFDhmNhD'
-//     });
-//     // const a = await getUser({ api_token: 'd4dd4410-6090-495e-b72e-958657be914e' });
-//     // const { database_id, NOTION_TOKEN, YOUDAO_ID, YOUDAO_TOKEN } = a;
-
-//     // console.log(database_id);
-// } catch (e) {
-//     console.error(e);
-// }
-
 
 export { getUser };
