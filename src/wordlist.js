@@ -1,11 +1,8 @@
 import { randomUUID, createHash } from 'crypto'
 import axios from "axios";
 import { Client } from "@notionhq/client";
-import { CONFIG } from './config.js';
 
-const { NOTION_TOKEN, YOUDAO_ID, YOUDAO_TOKEN, database_id } = CONFIG;
-
-const notion = new Client({ auth: NOTION_TOKEN });
+let notion = null;
 
 function truncate(q) {
     var len = q.length;
@@ -13,8 +10,14 @@ function truncate(q) {
     return q.substring(0, 10) + len + q.substring(len - 10, len);
 }
 
-async function getWordTrans(word) {
+async function getWordTrans(word, userInfo) {
     try {
+        const { YOUDAO_ID, YOUDAO_TOKEN } = userInfo;
+        if (!YOUDAO_ID || !YOUDAO_TOKEN) return {
+            err: -1,
+            errmsg: 'YOUDAO_ID or YOUDAO_TOKEN is null.'
+        }
+
         const salt = randomUUID();
         const curtime = Math.round(new Date().getTime() / 1000);
         const hash = createHash('sha256')
@@ -62,7 +65,7 @@ async function getWordTrans(word) {
     }
 }
 
-async function checkIfExist(word) {
+async function checkIfExist(word, database_id) {
     const response = await notion.databases.query({
         database_id: database_id,
         filter: {
@@ -77,8 +80,12 @@ async function checkIfExist(word) {
     return (!results || results.length === 0) ? false : true
 }
 
-async function addItem(src, res) {
-    if (await checkIfExist(src)) {
+async function addItem(src, res, userInfo) {
+    const { database_id, NOTION_TOKEN } = userInfo;
+
+    notion = new Client({ auth: NOTION_TOKEN });
+
+    if (await checkIfExist(src, database_id)) {
         return {
             err: 0,
             errmsg: 'Already exist.'

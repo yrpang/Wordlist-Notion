@@ -1,13 +1,38 @@
 import express from 'express';
 import { getWordTrans, addItem } from './wordlist.js'
-import { CONFIG } from './config.js';
-const { TOKEN } = CONFIG;
+import { getUser } from './userInfo.js';
 
 const app = express()
 const port = 9000
 
 app.get('/', async (req, res) => {
     const { word, token } = req.query;
+    if (!token) {
+        console.log(token);
+        res.json({
+            errCode: -2,
+            errMsg: "Parameter 'token' is missing."
+        });
+        return;
+    }
+    const userInfo = await getUser({ api_token: token });
+
+    if (!userInfo.NOTION_TOKEN || !userInfo.database_id) {
+        res.json({
+            errCode: -5,
+            errMsg: "Parameter 'token' is wrong."
+        })
+        return;
+    }
+
+    if (!userInfo.YOUDAO_ID || !userInfo.NOTION_TOKEN) {
+        res.json({
+            errCode: -5,
+            errMsg: "Cannot find YOUDAO_token"
+        })
+        return;
+    }
+
     if (!word) {
         console.log(word);
         console.log(req.query)
@@ -17,17 +42,9 @@ app.get('/', async (req, res) => {
         });
         return;
     }
-    if (!token || token !== TOKEN) {
-        console.log(token)
-        res.json({
-            errCode: -2,
-            errMsg: "Parameter 'token' is missing or wrong."
-        });
-        return;
-    }
 
     // Get translation from youdao
-    const transRes = await getWordTrans(word);
+    const transRes = await getWordTrans(word, userInfo);
     if (transRes.err != 0) {
         console.error(transRes);
         res.json({
@@ -39,7 +56,7 @@ app.get('/', async (req, res) => {
 
     // Add word to Notion
     const wordLower = word.toLowerCase();
-    const addItemRes = await addItem(wordLower, transRes);
+    const addItemRes = await addItem(wordLower, transRes, userInfo);
     if (addItemRes.err != 0) {
         console.error(addItemRes);
         res.json({
