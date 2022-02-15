@@ -27,4 +27,4 @@ Click the **Duplicate** button and remember the `database_id` of your database.
 
 ### Step 3: Download Apple Shortcut and config
 
-Download this [shortcut](https://www.icloud.com/shortcuts/ac17b51e2fd5464e90f3ca861f2cc3b1) and fill in the `access_token` and `database_id` obtained above.
+Download this [shortcut](https://www.icloud.com/shortcuts/94e92dd6b80948eb8f78a16c0b5b96e3) and fill in the `access_token` and `database_id` obtained above.

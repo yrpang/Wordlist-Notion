@@ -9,7 +9,7 @@ const { YOUDAO_ID, YOUDAO_TOKEN, OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET } = CONFIG
 const app = express()
 const port = 9000
 
-app.get('/', async (req, res) => {
+app.get('/api', async (req, res) => {
     const { token, database_id, word } = req.query;
     if (!token) {
         res.json({
