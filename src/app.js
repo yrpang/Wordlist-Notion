@@ -88,9 +88,13 @@ app.get('/api', async (req, res) => {
 })
 
 app.get('/callback', async (req, res) => {
-    console.log(req.query);
-
     const { code, state } = req.query;
+    if(!code){
+        res.json({
+            err: "Parameter 'code' is null"
+        })
+        return;
+    }
 
     try {
         const response = await axios.post('https://api.notion.com/v1/oauth/token', {
@@ -104,6 +108,7 @@ app.get('/callback', async (req, res) => {
             }
         })
         res.send(`请妥善保存，您的token是: ${response.data.access_token}`);
+        return;
     }
     catch (e) {
         console.error(e.response.status, e.response.data);
@@ -111,6 +116,7 @@ app.get('/callback', async (req, res) => {
             status: e.response.status,
             err: e.response.state
         })
+        return;
     }
 })
 
