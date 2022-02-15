@@ -1,8 +1,10 @@
-# notion worklist
+# Notion Worklist
 
 自动查词并保存到notion的云函数
 
-## How to use
+## How to use(Beta)
+
+At this stage, this service may be terminate at any time without notice. If you want to use it for a long time, please deploy it yourself.
 
 ### Step 1: Duplicate the template database
 
@@ -15,11 +17,11 @@ Duplicate the [Wordlist template Database](https://yrpang.notion.site/b3e8405329
 >                                   |--------- Database ID --------|
 > ```
 
-Click the **Duplicate** button and remember the `database_id` of your database created.
+Click the **Duplicate** button and remember the `database_id` of your database.
 
 ### Step 2: Get `access_token`
 
-> Warning: To ensure safety please only give access to the page you created in step1 and keep the `access_token` safe.
+**Warning: To ensure safety please only give access to the page you created in step1 and keep the `access_token` safe.**
 
 [Login with Notion](https://api.notion.com/v1/oauth/authorize?owner=user&client_id=2cb2df41-a063-4460-b2aa-5d3ed39b4f73&redirect_uri=https%3A%2F%2Fwordlist.lnception.cn%2Fcallback&response_type=code) to give permission to read and write the database created in Setp1.
 
