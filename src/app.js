@@ -103,7 +103,6 @@ app.get('/callback', async (req, res) => {
                 password: OAUTH_CLIENT_SECRET
             }
         })
-        console.log(response.data);
         res.send(`请妥善保存，您的token是: ${response.data.access_token}`);
     }
     catch (e) {
