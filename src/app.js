@@ -1,13 +1,30 @@
 import express from 'express';
 import { TranslationAPI, NotionAPI } from './wordlist.js'
-import { getUser } from './userInfo.js';
 import { APIError } from './error.js';
+import axios from 'axios';
+import { CONFIG } from './config.js';
+
+const { YOUDAO_ID, YOUDAO_TOKEN } = CONFIG;
 
 const app = express()
 const port = 9000
 
 app.get('/', async (req, res) => {
-    const { word, token } = req.query;
+    const { token, database_id, word } = req.query;
+    if (!token) {
+        res.json({
+            errCode: -1,
+            errMsg: "Parameter 'token' is missing."
+        });
+        return;
+    }
+    if (!database_id) {
+        res.json({
+            errCode: -1,
+            errMsg: "Parameter 'database_id' is missing."
+        });
+        return;
+    }
     if (!word) {
         res.json({
             errCode: -1,
@@ -15,25 +32,15 @@ app.get('/', async (req, res) => {
         });
         return;
     }
-    if (!token) {
-        res.json({
-            errCode: -2,
-            errMsg: "Parameter 'token' is missing."
-        });
-        return;
-    }
 
     try {
-        const userInfo = await getUser(token);
-        const { NOTION_TOKEN, database_id, YOUDAO_ID, YOUDAO_TOKEN } = userInfo;
-
         // Get translation from youdao
         const trans = new TranslationAPI(YOUDAO_ID, YOUDAO_TOKEN);
         const transRes = await trans.getWordTrans(word);
 
         // Add word to Notion
         const wordLower = word.toLowerCase();
-        const notion = new NotionAPI(NOTION_TOKEN, database_id);
+        const notion = new NotionAPI(token, database_id);
         await notion.addItem(wordLower, transRes);
 
         res.json({
@@ -77,6 +84,33 @@ app.get('/', async (req, res) => {
             })
             return;
         }
+    }
+})
+
+app.get('/callback', async (req, res) => {
+    console.log(req.query);
+
+    const { code, state } = req.query;
+
+    try {
+        const response = await axios.post('https://api.notion.com/v1/oauth/token', {
+            'grant_type': 'authorization_code',
+            'code': code,
+            'redirect_uri': 'https://wordlist.lnception.cn/callback'
+        }, {
+            auth: {
+                username: '2cb2df41-a063-4460-b2aa-5d3ed39b4f73',
+                password: 'secret_Xg6pmlE07bM30IzblKWHL8qzpKHfUZIjFmXM03lHXxU'
+            }
+        })
+        console.log(response.data);
+        res.send(`请妥善保存，您的token是: ${response.data.access_token}`);
+    }
+    catch (e) {
+        console.error(e.response.status, e.response.data);
+        res.json({
+            err: e.response.state
+        })
     }
 })
 

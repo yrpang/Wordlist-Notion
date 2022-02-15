@@ -2,6 +2,10 @@
 
 自动查词并保存到notion的云函数
 
+## 开箱即用版
+
+[Login with Notion](https://api.notion.com/v1/oauth/authorize?owner=user&client_id=2cb2df41-a063-4460-b2aa-5d3ed39b4f73&redirect_uri=https%3A%2F%2Fwordlist.lnception.cn%2Fcallback&response_type=code)
+
 ## How to use
 
 ### Step 1: Duplicate the template
