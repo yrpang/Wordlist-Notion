@@ -67,7 +67,7 @@ class TranslationAPI {
 class NotionAPI {
     constructor(NOTION_TOKEN, database_id) {
         if (!NOTION_TOKEN || !database_id) {
-            throw new APIError('Translation', 'YOUDAO_ID or YOUDAO_TOKEN is null');
+            throw new APIError('NotionAPI', 'NOTION_TOKEN or database_id is null');
         }
 
         this.NOTION_TOKEN = NOTION_TOKEN;
@@ -80,7 +80,7 @@ class NotionAPI {
             const response = await this.notion.databases.query({
                 database_id: this.database_id,
                 filter: {
-                    property: 'Word',
+                    property: 'title',
                     text: {
                         equals: word,
                     },
