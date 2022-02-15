@@ -1,13 +1,11 @@
 // Just a template
 const CONFIG = {
     // Notion
-    NOTION_TOKEN: '',
+    OAUTH_CLIENT_ID: '',
+    OAUTH_CLIENT_SECRET: '',
     // youdao API
     YOUDAO_ID: '',
-    YOUDAO_TOKEN: '',
-    // API config
-    TOKEN: '',
-    database_id: '',
+    YOUDAO_TOKEN: ''
 };
 
 export { CONFIG };

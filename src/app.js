@@ -4,7 +4,7 @@ import { APIError } from './error.js';
 import axios from 'axios';
 import { CONFIG } from './config.js';
 
-const { YOUDAO_ID, YOUDAO_TOKEN } = CONFIG;
+const { YOUDAO_ID, YOUDAO_TOKEN, OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET } = CONFIG;
 
 const app = express()
 const port = 9000
@@ -99,8 +99,8 @@ app.get('/callback', async (req, res) => {
             'redirect_uri': 'https://wordlist.lnception.cn/callback'
         }, {
             auth: {
-                username: '2cb2df41-a063-4460-b2aa-5d3ed39b4f73',
-                password: 'secret_Xg6pmlE07bM30IzblKWHL8qzpKHfUZIjFmXM03lHXxU'
+                username: OAUTH_CLIENT_ID,
+                password: OAUTH_CLIENT_SECRET
             }
         })
         console.log(response.data);
@@ -109,6 +109,7 @@ app.get('/callback', async (req, res) => {
     catch (e) {
         console.error(e.response.status, e.response.data);
         res.json({
+            status: e.response.status,
             err: e.response.state
         })
     }
