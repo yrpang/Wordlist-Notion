@@ -11,21 +11,21 @@ const port = 9000
 
 app.get('/api', async (req, res) => {
     const { token, database_id, word } = req.query;
-    if (!token) {
+    if (typeof database_id != 'string' || !token) {
         res.json({
             errCode: -1,
             errMsg: "Parameter 'token' is missing."
         });
         return;
     }
-    if (!database_id) {
+    if (typeof database_id != 'string' || !database_id) {
         res.json({
             errCode: -1,
             errMsg: "Parameter 'database_id' is missing."
         });
         return;
     }
-    if (!word) {
+    if (typeof word != 'string' || !word) {
         res.json({
             errCode: -1,
             errMsg: "Parameter 'word' is missing."
@@ -89,7 +89,7 @@ app.get('/api', async (req, res) => {
 
 app.get('/callback', async (req, res) => {
     const { code, state } = req.query;
-    if(!code){
+    if (!code) {
         res.json({
             err: "Parameter 'code' is null"
         })
