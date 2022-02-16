@@ -11,7 +11,7 @@ const port = 9000
 
 app.get('/api', async (req, res) => {
     const { token, database_id, word } = req.query;
-    if (typeof database_id != 'string' || !token) {
+    if (typeof token != 'string' || !token) {
         res.json({
             errCode: -1,
             errMsg: "Parameter 'token' is missing."
