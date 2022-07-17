@@ -107,7 +107,8 @@ app.get('/callback', async (req, res) => {
                 password: OAUTH_CLIENT_SECRET
             }
         })
-        res.send(`请妥善保存，您的token是: ${response.data.access_token}`);
+        // res.send(`请妥善保存，您的token是: ${response.data.access_token}`);
+        res.redirect(`https://yrpang.github.io/Wordlist-Notion/callback?code=${response.data.access_token}`);
         return;
     }
     catch (e) {
