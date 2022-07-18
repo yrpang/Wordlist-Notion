@@ -2,6 +2,8 @@
 
 自动查词并保存到notion的云函数
 
+[![OSCS Status](https://www.oscs1024.com/platform/badge/yrpang/Wordlist-Notion.svg?size=small)](https://www.oscs1024.com/project/yrpang/Wordlist-Notion?ref=badge_small)
+
 ## How to use(Beta)
 
 At this stage, this service may be terminate at any time without notice. If you want to use it for a long time, please deploy it yourself.
