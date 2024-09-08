@@ -21,8 +21,7 @@ jobs:
       env: 
         CONFIG: ${{ secrets.CONFIG }}
     - name: deploy
-      shell: bash
-      run: sls deploy --debug
+      uses: woodyyan/tencent-serverless-action@1.0.3
       env: 
         SERVERLESS_PLATFORM_VENDOR: tencent
         SLS_GEO_LOCATION: cn
