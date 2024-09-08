@@ -13,20 +13,10 @@ inputs:
   name: notionBot
   description: Save word to Notion. 
   region: ap-beijing
-  runtime: Nodejs16.13
+  runtime: Nodejs18.15
   installDependency: false
   vpcConfig: # 可以不指定
     vpcId: vpc-rgvuuoio
     subnetId: subnet-12q7b7zp
   eip: true
   timeout: 15
-  events: 
-    - apigw: 
-        parameters: 
-          serviceId: service-kjstrjbf # 留空可以自动创建
-          protocols:
-            - https
-          environment: release
-          endpoints: 
-            - path: /
-              method: GET
