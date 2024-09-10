@@ -1,4 +1,4 @@
-app: wordlist-98cc6f39
+app: wordlistAPI
 stage: prod
 
 component: http

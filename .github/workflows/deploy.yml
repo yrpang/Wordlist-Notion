@@ -11,7 +11,7 @@ jobs:
       with: 
         node-version: '18'
     - name: install serverless
-      run: npm install -g serverless
+      run: npm i -g serverless-cloud-framework
     - name: install node_modules
       run: |
         cd src
@@ -21,11 +21,9 @@ jobs:
       env: 
         CONFIG: ${{ secrets.CONFIG }}
     - name: deploy
-      uses: woodyyan/tencent-serverless-action@1.0.3
+      shell: bash
+      run: |
+        scf deploy --debug
       env: 
-        SERVERLESS_PLATFORM_VENDOR: tencent
-        SLS_GEO_LOCATION: cn
-        STAGE: prod
         TENCENT_SECRET_ID: ${{ secrets.TENCENT_SECRET_ID }}
         TENCENT_SECRET_KEY: ${{ secrets.TENCENT_SECRET_KEY }}
-      
