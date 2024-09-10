@@ -24,11 +24,11 @@ inputs:
       - key: azureOpenAIApiKey
         value: ${env:azureOpenAIApiKey}
       - key: azureOpenAIApiInstanceName
-        value: ${env:azureOpenAIApiInstanceName}
+        value: ${env:AZUREOPENAIAPIINSTANCENAME}
       - key: azureOpenAIApiDeploymentName
-        value: ${env:azureOpenAIApiDeploymentName}
+        value: ${env:AZUREOPENAIAPIDEPLOYMENTNAME}
       - key: azureOpenAIApiVersion
-        value: ${env:azureOpenAIApiVersion}
+        value: ${env:AZUREOPENAIAPIVERSION}
     events:
       - http:
           parameters:

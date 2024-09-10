@@ -28,6 +28,3 @@ jobs:
         YOUDAO_ID: ${{ secrets.YOUDAO_ID }}
         YOUDAO_TOKEN: ${{ secrets.YOUDAO_TOKEN }}
         azureOpenAIApiKey: ${{ secrets.azureOpenAIApiKey }}
-        azureOpenAIApiInstanceName: ${{ env.azureOpenAIApiInstanceName }}
-        azureOpenAIApiDeploymentName: ${{ env.azureOpenAIApiDeploymentName }}
-        azureOpenAIApiVersion: ${{ env.azureOpenAIApiVersion }}
