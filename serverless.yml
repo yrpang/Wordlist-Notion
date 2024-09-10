@@ -1,9 +1,8 @@
-app: wordlistAPI
+app: wordlist
 stage: prod
 
 component: http
-name: wordlist
-
+name: wordlistAPI
 inputs:
   src:
     src: ./src
