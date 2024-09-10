@@ -2,10 +2,9 @@ import express from 'express';
 import { TranslationAPI, NotionAPI } from './wordlist.js'
 import { APIError } from './error.js';
 import axios from 'axios';
-import { CONFIG } from './config.js';
 import { chain } from './llm.js'
 
-const { YOUDAO_ID, YOUDAO_TOKEN, OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET } = CONFIG;
+const { YOUDAO_ID, YOUDAO_TOKEN, OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET } = process.env;
 
 const app = express()
 const port = 9000

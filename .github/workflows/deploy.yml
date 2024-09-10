@@ -16,10 +16,6 @@ jobs:
       run: |
         cd src
         npm install
-    - name: set config.js
-      run: echo "$CONFIG" > ./src/config.js
-      env: 
-        CONFIG: ${{ secrets.CONFIG }}
     - name: deploy
       shell: bash
       run: |
@@ -27,3 +23,11 @@ jobs:
       env: 
         TENCENT_SECRET_ID: ${{ secrets.TENCENT_SECRET_ID }}
         TENCENT_SECRET_KEY: ${{ secrets.TENCENT_SECRET_KEY }}
+        OAUTH_CLIENT_ID: ${{ secrets.OAUTH_CLIENT_ID }}
+        OAUTH_CLIENT_SECRET: ${{ secrets.OAUTH_CLIENT_SECRET }}
+        YOUDAO_ID: ${{ secrets.YOUDAO_ID }}
+        YOUDAO_TOKEN: ${{ secrets.YOUDAO_TOKEN }}
+        azureOpenAIApiKey: ${{ secrets.azureOpenAIApiKey }}
+        azureOpenAIApiInstanceName: ${{ env.azureOpenAIApiInstanceName }}
+        azureOpenAIApiDeploymentName: ${{ env.azureOpenAIApiDeploymentName }}
+        azureOpenAIApiVersion: ${{ env.azureOpenAIApiVersion }}

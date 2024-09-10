@@ -4,9 +4,8 @@ import {
     FewShotChatMessagePromptTemplate,
 } from "@langchain/core/prompts";
 import { StringOutputParser } from "@langchain/core/output_parsers";
-import { CONFIG } from './config.js';
 
-const { azureOpenAIApiKey, azureOpenAIApiInstanceName, azureOpenAIApiDeploymentName, azureOpenAIApiVersion } = CONFIG;
+const { azureOpenAIApiKey, azureOpenAIApiInstanceName, azureOpenAIApiDeploymentName, azureOpenAIApiVersion } = process.env;
 
 const llm = new AzureChatOpenAI({
     model: 'gpt-4o-mini',

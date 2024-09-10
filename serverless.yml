@@ -11,7 +11,24 @@ inputs:
   faas:
     runtime: Nodejs18.15
     framework: express
-    name: ${name}
+    name: ${name}-${stage}-${app}
+    environments: #  环境变量
+      - key: OAUTH_CLIENT_ID
+        value: ${env:OAUTH_CLIENT_ID}
+      - key: OAUTH_CLIENT_SECRET
+        value: ${env:OAUTH_CLIENT_SECRET}
+      - key: YOUDAO_ID
+        value: ${env:YOUDAO_ID}
+      - key: YOUDAO_TOKEN
+        value: ${env:YOUDAO_TOKEN}
+      - key: azureOpenAIApiKey
+        value: ${env:azureOpenAIApiKey}
+      - key: azureOpenAIApiInstanceName
+        value: ${env:azureOpenAIApiInstanceName}
+      - key: azureOpenAIApiDeploymentName
+        value: ${env:azureOpenAIApiDeploymentName}
+      - key: azureOpenAIApiVersion
+        value: ${env:azureOpenAIApiVersion}
     events:
       - http:
           parameters:
