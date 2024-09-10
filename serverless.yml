@@ -1,22 +1,23 @@
-app: wordlist
-stage: dev
+app: wordlist-98cc6f39
+stage: prod
 
-component: scf
-name: notionAPI
+component: http
+name: wordlist
 
 inputs:
   src:
     src: ./src
     exclude:
       - .env
-  type: web
-  name: notionBot
-  description: Save word to Notion. 
-  region: ap-beijing
-  runtime: Nodejs18.15
-  installDependency: false
-  vpcConfig: # 可以不指定
-    vpcId: vpc-rgvuuoio
-    subnetId: subnet-12q7b7zp
-  eip: true
-  timeout: 15
+  faas:
+    runtime: Nodejs18.15
+    framework: express
+    name: ${name}
+    events:
+      - http:
+          parameters:
+            netConfig:
+              enableIntranet: true
+              enableExtranet: true
+            qualifier: $DEFAULT
+            authType: NONE
